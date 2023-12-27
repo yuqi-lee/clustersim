@@ -208,13 +208,15 @@ class Server:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_ratio = min(1, self.total_mem / local_alloc_mem)
             if local_ratio >= self.min_ratio:
-                if not avail_far_mem or local_alloc_mem - self.total_mem <= avail_far_mem:
+                if local_alloc_mem - self.total_mem <= avail_far_mem:
+                #if local_alloc_mem - self.total_mem <= 32768:
                    return True
         else:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_min_mem_sum = self.min_mem_sum + w.min_mem
             if local_min_mem_sum <= self.total_mem:
                 if avail_far_mem is None  or local_alloc_mem - self.total_mem <= avail_far_mem:
+                #if local_alloc_mem - self.total_mem <= 32768:        
                     return True
 
         return False

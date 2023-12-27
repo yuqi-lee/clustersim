@@ -91,11 +91,11 @@ class Workload:
 
 class Quicksort(Workload):
     wname = "quicksort"
-    ideal_mem = 8250
+    ideal_mem = 24750
     min_ratio = 0.65
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 1
-    coeff = [-1984.129, 4548.033, -3588.554, 1048.644, 252.997]
+    cpu_req = 3
+    coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
 class Linpack(Workload):
     wname = "linpack"
@@ -115,11 +115,11 @@ class Tfinception(Workload):
 
 class Kmeans(Workload):
     wname = "kmeans"
-    ideal_mem = 4847
-    min_ratio = 0.75
+    ideal_mem = 14514
+    min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 1
-    coeff = [-8258.542,  25767.366, -28409.394,  12549.084,  -1289.025]
+    cpu_req = 3
+    coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
 class Spark(Workload):
     wname = "spark"
@@ -131,11 +131,11 @@ class Spark(Workload):
 
 class Memaslap(Workload):
     wname = "memaslap"
-    ideal_mem = 12288
+    ideal_mem = 36864
     min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 2
-    coeff = [-11626.894, 32733.914, -31797.375, 11484.578, 113.33]
+    cpu_req = 6
+    coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
 def get_workload_class(wname):
     return {'quicksort': Quicksort,
