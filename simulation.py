@@ -5,6 +5,7 @@ import time
 from sortedcollections import SortedDict
 import numpy as np
 from scipy.optimize import Bounds, minimize
+import os
 
 PRINT_ENABLE = False
 use_optimal_shrink = False
@@ -55,6 +56,9 @@ class Server:
         self.L = L
         self.checkin(max_cpus, max_mem, remotemem, uniform_policy,
                      min_ratio, workload_ratios, reclamation_cpus)
+        self.path = '/users/YuqiLi/clustersim/res/{}-6servers-32G.txt'.format(sid)
+        self.res_file = open(self.path, 'w')
+
 
     def append_job(self, workload):
         self.executing.append(workload)
@@ -118,6 +122,8 @@ class Server:
         else:
             assert self.alloc_mem <= self.total_mem
             ratios = None
+        
+        self.res_file.write(str(max(self.alloc_mem - self.total_mem,0)) + '\n')
 
         self.update_all_new(self.executing, new_idd, ratios)
         self.last_time = cur_time
@@ -208,15 +214,15 @@ class Server:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_ratio = min(1, self.total_mem / local_alloc_mem)
             if local_ratio >= self.min_ratio:
-                if local_alloc_mem - self.total_mem <= avail_far_mem:
-                #if local_alloc_mem - self.total_mem <= 32768:
+                #if local_alloc_mem - self.total_mem <= avail_far_mem:
+                if local_alloc_mem - self.total_mem <= 32768:
                    return True
         else:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_min_mem_sum = self.min_mem_sum + w.min_mem
             if local_min_mem_sum <= self.total_mem:
-                if avail_far_mem is None  or local_alloc_mem - self.total_mem <= avail_far_mem:
-                #if local_alloc_mem - self.total_mem <= 32768:        
+                #if avail_far_mem is None  or local_alloc_mem - self.total_mem <= avail_far_mem:
+                if local_alloc_mem - self.total_mem <= 32768:        
                     return True
 
         return False
