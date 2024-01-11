@@ -21,7 +21,7 @@ def simulate_loop_rep(id, num_trials=25):
 
     with open('results/results_'+str(id), 'w') as f: # empty/create file
         pass
-    workload = ['quicksort', 'kmeans', 'memaslap', 'linpack', 'spark', 'tf-inception']
+    workload = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     #workload_ratios = [55, 75, 70, 75, 90, 50]
     workload_ratios = [55, 65, 60, 75, 90, 50]
     min_ratios = [40, 40, 40, 50, 50, 50]
@@ -77,7 +77,7 @@ def simulate_loop_vary_s(id, num_trials=25):
 
     with open('results/results_'+str(id), 'w') as f: # empty/create file
         pass
-    workload = ['quicksort', 'kmeans', 'memaslap', 'linpack', 'spark', 'tf-inception']
+    workload = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     workload_ratios = [55, 65, 60, 75, 90, 50]
     mem = 32768
     until = 10#1500
@@ -132,7 +132,7 @@ def simulate_loop_fixed_far_mem(id, num_trials=25):
 
     with open('results/results_'+str(id), 'w') as f: # empty/create file
         pass
-    workload = ['quicksort', 'kmeans', 'memaslap', 'linpack', 'spark', 'tf-inception']
+    workload = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     workload_ratios = [55, 65, 60, 75, 90, 50]
     mem = 32768
     until = 10#1500
@@ -191,7 +191,7 @@ def simulate_loop_vary_far_mem(id, num_trials=10):
 
     with open('results/results_'+str(id), 'w') as f: # empty/create file
         pass
-    workload = ['quicksort', 'kmeans', 'memaslap', 'linpack', 'spark', 'tf-inception']
+    workload = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     workload_ratios = [55, 65, 60, 75, 90, 50]
     mem = 196608
     until = 10
@@ -278,7 +278,7 @@ def simulate_loop_portional(id, num_trials=25):
 
     with open('results/results_'+str(id), 'w') as f: # empty/create file
         pass
-    workload = ['quicksort', 'kmeans', 'memaslap', 'linpack', 'spark', 'tf-inception']
+    workload = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     workload_ratios = [55, 65, 60, 75, 90, 50]
     mem = 32768
     until = 10#1500

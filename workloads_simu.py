@@ -91,68 +91,68 @@ class Workload:
 
 class Quicksort(Workload):
     wname = "quicksort"
-    ideal_mem = 33000
-    min_ratio = 0.65
+    ideal_mem = 10300
+    min_ratio = 0.7
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 4
-    x = [1,0.9,0.8,0.7,0.6,0.5,0.4]
-    y = [277.16, 303.402, 310.482, 315.227, 311.71, 326.843, 338.10]
-    coeff = [-1984.129, 4548.033, -3588.554, 1048.644, 252.997]
+    cpu_req = 1
+    x = [1,      0.9,    0.8,   0.7,    0.6]
+    y = [248.75, 260.41, 268.4, 280.11, 300.78]
+    coeff = [-895.83333333, 1814.16666667, -719.04166667, -586.04166667,  635.5]
 
-class Linpack(Workload):
-    wname = "linpack"
-    ideal_mem = 6000
-    min_ratio = 0.9
-    min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 7
-    x = [1,0.9,0.8,0.7,0.6,0.5]
-    y = [24.174, 25.981, 27.894, 30.681, 33.057, 35.478]
-    coeff = [38.52, -77.88, 26.86, 36.70]
-
-class Tfinception(Workload):
-    wname = "tf-inception"
-    ideal_mem = 6500
-    min_ratio = 0.9
-    min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 6
-    x = [1,0.9,0.8,0.7,0.6,0.5]
-    y = [405.112, 419.762, 428.091, 436.107, 440.242,475.133]
-    coeff = [-1617.416, 3789.953, -2993.734, 1225.477]
-
-class Kmeans(Workload):
-    wname = "kmeans"
-    ideal_mem = 8000
-    min_ratio = 0.75
-    min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 4
-    x = [1,0.9,0.8,0.7,0.6,0.5,0.4]
-    y = [359.44, 359.77, 377.9275, 430.557, 508.24, 587.98, 920.575]
-    coeff = [-8258.542,  25767.366, -28409.394,  12549.084,  -1289.025]
-
-class Spark(Workload):
-    wname = "spark"
-    ideal_mem = 10000
-    min_ratio = 0.75
-    min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 7
-    x = [1,0.9,0.8,0.7,0.6,0.5]
-    y = [74.472, 81.223, 144.567, 222.010, 234.156, 249.249]
-    coeff = [4689.05, -10841.59, 7709.92, -1486.13]
-
-class Memaslap(Workload):
-    wname = "memaslap"
-    ideal_mem = 36000#12288
+class Xgboost(Workload):
+    wname = "xgboost"
+    ideal_mem = 16300
     min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 6
-    x = [1,0.9,0.8,0.7,0.6,0.5,0.4]
-    y = [908.03, 926.2, 950.87, 1007.09, 1119.16, 1272.82, 1416.51]
-    coeff = [-11626.894, 32733.914, -31797.375, 11484.578, 113.33]
+    cpu_req = 2
+    x = [1,      0.9,    0.8,    0.7,    0.6,    0.5,    0.4,    0.3,    0.2]
+    y = [338.45, 341.90, 347.52, 349.21, 352.98, 356.92, 386.09, 405.70, 430.11]
+    coeff = [ -876.04895105,  1878.74643875, -1148.56526807,    25.39511137, 457.79055556]
+
+class Xsbench(Workload):
+    wname = "xsbench"
+    ideal_mem = 33300
+    min_ratio = 1
+    min_mem = int(min_ratio * ideal_mem)
+    cpu_req = 8
+    x = [1, 0.9, 0.8]
+    y = [244.91, 478.54, 10000.0]
+    coeff = [-1984.129, 4548.033, -3588.554, 1048.644, 252.997]
+
+class Snappy(Workload):
+    wname = "snappy"
+    ideal_mem = 34000
+    min_ratio = 0.8
+    min_mem = int(min_ratio * ideal_mem)
+    cpu_req = 1
+    x = [1,      0.9,    0.8,    0.7,    0.6]
+    y = [134.88, 143.15, 155.37, 211.18, 274.42]
+    coeff = [-31583.33333335,  100776.66666673, -118088.66666675,   59796.08333338, -10765.87000001]
+
+class Pagerank(Workload):
+    wname = "pagerank"
+    ideal_mem = 18900
+    min_ratio = 1
+    min_mem = int(min_ratio * ideal_mem)
+    cpu_req = 8
+    x = [1,      0.9,    0.8]
+    y = [221.06, 736.29, 99900000.00]
+    coeff = [-1617.416, 3789.953, -2993.734, 1225.477]
+
+class Redis(Workload):
+    wname = "redis"
+    ideal_mem = 31800
+    min_ratio = 0.6
+    min_mem = int(min_ratio * ideal_mem)
+    cpu_req = 2
+    x = [1,      0.9,    0.8,    0.7,    0.6,    0.5,    0.4]
+    y = [1273.74, 1280.33, 1290.85, 1340.63, 1479.72, 1694.631, 1949.36 ]
+    coeff = [-14813.52272727,  38076.50252525, -31906.18749999,   8189.04796176, 1725.16288095]
 
 def get_workload_class(wname):
     return {'quicksort': Quicksort,
-            'linpack': Linpack,
-            'tf-inception': Tfinception,
-            'spark': Spark,
-            'kmeans': Kmeans,
-            'memaslap': Memaslap}[wname]
+            'xgboost': Xgboost,
+            'xsbench': Xsbench,
+            'pagerank': Pagerank,
+            'snappy': Snappy,
+            'redis': Redis}[wname]

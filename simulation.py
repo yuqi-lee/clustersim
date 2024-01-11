@@ -45,7 +45,7 @@ def my_print(s):
 
 class Server:
     def __init__(self, sid, L, remotemem, max_cpus, max_mem,
-                 uniform_policy, min_ratio, workload_ratios, reclamation_cpus):
+                 uniform_policy, use_fastswap, min_ratio, workload_ratios, reclamation_cpus, max_remote_mem):
         self.sid = sid
         self.alloc_mem = 0
         self.min_mem_sum = 0
@@ -54,10 +54,11 @@ class Server:
         self.last_time = 0 # added for simulation
         self.next_time = 0 # optimization
         self.L = L
-        self.checkin(max_cpus, max_mem, remotemem, uniform_policy,
+        self.checkin(max_cpus, max_mem, remotemem, uniform_policy, use_fastswap, 
                      min_ratio, workload_ratios, reclamation_cpus)
         self.path = '/users/YuqiLi/clustersim/res/{}-6servers-32G.txt'.format(sid)
         self.res_file = open(self.path, 'w')
+        self.max_remote_mem = max_remote_mem
 
 
     def append_job(self, workload):
@@ -66,7 +67,7 @@ class Server:
     def remove_job(self, workload):
         self.executing.remove(workload)
 
-    def checkin(self, max_cpus, max_mem, use_remote, use_uniform_policy, min_ratio, workload_ratios, reclamation_cpus):
+    def checkin(self, max_cpus, max_mem, use_remote, use_uniform_policy, use_fastswap,min_ratio, workload_ratios, reclamation_cpus):
         """
         the scheduler checks in with these params.
         we return whether we have enough resources to do the checkin.
@@ -79,6 +80,7 @@ class Server:
         self.free_cpus = max_cpus
         self.remote_mem = use_remote
         self.use_uniform_policy = use_uniform_policy
+        self.use_fastswap = use_fastswap
         self.min_ratio = min_ratio
         self.workload_ratios = workload_ratios
         self.extra_cpus = reclamation_cpus*self.remote_mem 
@@ -123,7 +125,7 @@ class Server:
             assert self.alloc_mem <= self.total_mem
             ratios = None
         
-        self.res_file.write(str(max(self.alloc_mem - self.total_mem,0)) + '\n')
+        #self.res_file.write(str(max(self.alloc_mem - self.total_mem,0)) + '\n')
 
         self.update_all_new(self.executing, new_idd, ratios)
         self.last_time = cur_time
@@ -214,16 +216,23 @@ class Server:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_ratio = min(1, self.total_mem / local_alloc_mem)
             if local_ratio >= self.min_ratio:
-                #if local_alloc_mem - self.total_mem <= avail_far_mem:
-                if local_alloc_mem - self.total_mem <= 32768:
-                   return True
+                if self.use_fastswap:
+                    if local_alloc_mem - self.total_mem <= self.max_remote_mem:
+                        return True
+                else:                
+                    if local_alloc_mem - self.total_mem <= avail_far_mem:
+                        return True
         else:
             local_alloc_mem = self.alloc_mem + w.ideal_mem
             local_min_mem_sum = self.min_mem_sum + w.min_mem
             if local_min_mem_sum <= self.total_mem:
-                #if avail_far_mem is None  or local_alloc_mem - self.total_mem <= avail_far_mem:
-                if local_alloc_mem - self.total_mem <= 32768:        
-                    return True
+                if self.use_fastswap:
+                    if local_alloc_mem - self.total_mem <= self.max_remote_mem: 
+                        #print(self.max_remote_mem)
+                        return True
+                else:
+                    if avail_far_mem is None  or local_alloc_mem - self.total_mem <= avail_far_mem:
+                        return True
 
         return False
 
@@ -433,7 +442,7 @@ def get_schedule(size, max_arrival, workloads, ratios, jobs_ts):
     return L
 
 
-def simulate(seed, mem, size, until, ratios, workload, cpus, num_servers, remotemem, workload_ratios, max_far=0, use_shrink=False, uniform=False, min_ratio=None, use_small_workload=False):
+def simulate(seed, mem, size, until, ratios, workload, cpus, num_servers, remotemem, workload_ratios, max_far=0, use_shrink=False, uniform=False, min_ratio=None, use_small_workload=False, use_fastswap=False):
     global workloads
     if use_small_workload:
         import workloads_small as workloads
@@ -469,7 +478,7 @@ def simulate(seed, mem, size, until, ratios, workload, cpus, num_servers, remote
     servers = []
     for sid in range(num_servers):
         servers.append(Server(sid, L, remotemem, cpus, mem,
-                              uniform, min_ratio, workload_ratios, reclamation_cpus))
+                              uniform, use_fastswap, min_ratio, workload_ratios, reclamation_cpus, max_far/num_servers))
     try:
         return schedule(servers, L, workload_ratios, max_far, jobs_ts)
     except KeyboardInterrupt:

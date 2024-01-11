@@ -91,56 +91,56 @@ class Workload:
 
 class Quicksort(Workload):
     wname = "quicksort"
-    ideal_mem = 24750
-    min_ratio = 0.65
+    ideal_mem = 33300
+    min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 3
+    cpu_req = 1
     coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
-class Linpack(Workload):
-    wname = "linpack"
-    ideal_mem = 1600
-    min_ratio = 0.9
+class Xgboost(Workload):
+    wname = "xgboost"
+    ideal_mem = 11150
+    min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
     cpu_req = 4
-    coeff = [38.52, -77.88, 26.86, 36.70]
+    coeff = [-1617.416, 3789.953, -2993.734, 1225.477]
 
-class Tfinception(Workload):
-    wname = "tf-inception"
+class Xsbench(Workload):
+    wname = "xsbench"
     ideal_mem = 2120
-    min_ratio = 0.9
+    min_ratio = 1
     min_mem = int(min_ratio * ideal_mem)
     cpu_req = 2
     coeff = [-1617.416, 3789.953, -2993.734, 1225.477]
 
-class Kmeans(Workload):
-    wname = "kmeans"
-    ideal_mem = 14514
+class Snappy(Workload):
+    wname = "snappy"
+    ideal_mem = 38100
     min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 3
+    cpu_req = 1
     coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
-class Spark(Workload):
-    wname = "spark"
-    ideal_mem = 4400
-    min_ratio = 0.75
+class Pagerank(Workload):
+    wname = "pagerank"
+    ideal_mem = 18650
+    min_ratio = 1
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 3
+    cpu_req = 4
     coeff = [4689.05, -10841.59, 7709.92, -1486.13]
 
-class Memaslap(Workload):
-    wname = "memaslap"
-    ideal_mem = 36864
+class Redis(Workload):
+    wname = "redis"
+    ideal_mem = 30720
     min_ratio = 0.5
     min_mem = int(min_ratio * ideal_mem)
-    cpu_req = 6
+    cpu_req = 2
     coeff = [-1617.416, 3789.953, -2993.734, 1225.477] # just to test
 
 def get_workload_class(wname):
     return {'quicksort': Quicksort,
-            'linpack': Linpack,
-            'tf-inception': Tfinception,
-            'spark': Spark,
-            'kmeans': Kmeans,
-            'memaslap': Memaslap}[wname]
+            'xgboost': Xgboost,
+            'xsbench': Xsbench,
+            'pagerank': Pagerank,
+            'snappy': Snappy,
+            'redis': Redis}[wname]

@@ -41,7 +41,7 @@ def main():
     simulate(cmdargs.simu_name, cmdargs.filename)
 
 def get_matched_pairs(num_random, cpu, mem, limits=None):
-    work_names = ['quicksort','kmeans','memaslap','linpack','spark','tf-inception']
+    work_names = ['quicksort', 'xgboost', 'snappy', 'redis', 'xsbench', 'pagerank']
     cpu_reqs = np.array([workloads.get_workload_class(name).cpu_req for name in work_names])
     mem_reqs = np.array([workloads.get_workload_class(name).ideal_mem for name in work_names])
     time_reqs = np.array([workloads.get_workload_class(name)(0).profile(1)/1000 for name in work_names])
