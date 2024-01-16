@@ -125,7 +125,7 @@ class Server:
             assert self.alloc_mem <= self.total_mem
             ratios = None
         
-        #self.res_file.write(str(max(self.alloc_mem - self.total_mem,0)) + '\n')
+        self.res_file.write(str(max(self.alloc_mem - self.total_mem,0)) + '\n')
 
         self.update_all_new(self.executing, new_idd, ratios)
         self.last_time = cur_time

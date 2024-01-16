@@ -2,10 +2,8 @@
 
 ## Pre-requisites
 
-python3, numpy, scipy, sortedcollections
+python numpy, scipy, sortedcollections
 
-## Paper
-Please refer to our [paper](https://dl.acm.org/doi/abs/10.1145/3342195.3387522) accepted at [EUROSYS 2020](https://www.eurosys2020.org/)
 
 ## `start_simulations.py`
 `start_simulations.py` is the start point from which you can run various rack scale simulations. It accepts multiple arguments, but you can generate the large scale simulation results we presented in our paper (Figure 7, 8 and 9) with the default configuration:
