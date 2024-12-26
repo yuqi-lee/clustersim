@@ -369,6 +369,11 @@ def schedule(servers, L, workload_ratios, max_far_mem, jobs_ts):
     local_mem_usage = []
     avail_list = []
 
+    memutil_servers = []
+
+    for s in servers:
+        memutil_servers.append([])
+
     while not L.is_empty():
         timestamp, event = L.next_event()
         cur_time = timestamp
@@ -408,8 +413,17 @@ def schedule(servers, L, workload_ratios, max_far_mem, jobs_ts):
                 s, new_workload = find_new_workload(servers, Pending, max_far_mem, server_seq)
             if not (old_s.sid in ids): # only when it has not been updated
                 old_s.fill_job(None)
+        
+        for s in servers:
+            memutil_servers[s.sid].append(max(s.alloc_mem - s.total_mem,0))
+        
 
         my_print('')
+
+    for i in range(len(servers)):
+        avg = sum(memutil_servers[i]) / len(memutil_servers[i])
+        avg_ratio = avg / 32768
+        print("{}".format(avg_ratio))
 
     total_pending = 0
     for v in Pending.values():
